@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthDto } from './auth.dto';
+import { AuthDto, CreateAccountDto } from './auth.dto';
 import { AuthGuard } from './auth.guard';
 import { ApiBasicAuth, ApiBearerAuth } from '@nestjs/swagger';
 
@@ -17,8 +17,8 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/create')
-  create(): string {
-    return this.authService.create();
+  create(@Body() createAccDto: CreateAccountDto): Promise<any> {
+    return this.authService.create(createAccDto);
   }
 
   @ApiBearerAuth()

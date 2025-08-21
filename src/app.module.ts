@@ -11,17 +11,19 @@ import { UserController } from './user/user.controller';
 import { UserService } from './user/user.services';
 import { userProviders } from './user/user.provider';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     UserModule,
+    AuthModule,
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '60s' },
     }),
   ],
-  providers: [AppService, AuthService],
-  controllers: [AppController, AuthController],
+  providers: [AppService],
+  controllers: [AppController],
 })
 export class AppModule {}

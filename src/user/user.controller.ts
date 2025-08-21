@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.services';
 import { CreateUserDto } from './user.dto';
 import { UserInterface } from './user.interface';
@@ -14,5 +14,19 @@ export class UserController {
   @Post('/create')
   create(@Body() createCatDto: CreateUserDto): Promise<UserInterface> {
     return this.userService.create(createCatDto);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Post('/find-all')
+  findAll(): Promise<UserInterface[]> {
+    return this.userService.findAll();
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Get('/find-by-name')
+  find(@Param() username: string): Promise<any> {
+    return this.userService.findByUsername(username);
   }
 }

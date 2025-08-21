@@ -16,6 +16,14 @@ export class UserService {
   }
 
   async findAll(): Promise<UserInterface[]> {
-    return this.userModel.find().exec();
+    const rst = await this.userModel.find().exec();
+    console.log('rst', rst);
+    return rst;
+  }
+
+  async findByUsername(username: string): Promise<any> {
+    const rst = await this.userModel.findOne({ fullname: username }).exec();
+    console.log('rst', rst);
+    return rst;
   }
 }
